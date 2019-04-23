@@ -15,7 +15,7 @@ class SoundWatchService : Service() {
 
         Log.d(TAG, "onCreate()")
 
-        mTopHundredPullingThread = TopHundredPullingThread()
+        mTopHundredPullingThread = TopHundredPullingThread(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
