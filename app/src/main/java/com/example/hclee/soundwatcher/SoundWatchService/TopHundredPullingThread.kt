@@ -25,8 +25,8 @@ class TopHundredPullingThread(private val mContext: Context): Thread() {
     private val CHART_URL: String = "https://www.melon.com/chart/index.htm"
     private val CHART_QUERY: String = "div.ellipsis>span>a"
 
-    private lateinit var mNotificationManager: NotificationManager
-    private lateinit var mNotificationBuilder: NotificationCompat.Builder
+    private var mNotificationManager: NotificationManager? = null
+    private var mNotificationBuilder: NotificationCompat.Builder? = null
 
     companion object {
         // Notification id should not depends on each thread object.
@@ -38,9 +38,9 @@ class TopHundredPullingThread(private val mContext: Context): Thread() {
     override fun run() {
         Log.d(TAG, "run()")
 
-        mNotificationManager = (mContext.getSystemService(Context.NOTIFICATION_SERVICE)
+        mNotificationManager = mNotificationManager ?: (mContext.getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager)
-        mNotificationBuilder = NotificationCompat.Builder(mContext, "default")
+        mNotificationBuilder = mNotificationBuilder ?: NotificationCompat.Builder(mContext, "default")
             .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘 설정하지 않으면 오류남
             .setDefaults(Notification.DEFAULT_ALL)
             .setContentTitle("SoundWatcher") // 제목 설정
@@ -59,11 +59,11 @@ class TopHundredPullingThread(private val mContext: Context): Thread() {
         val elements: Elements = document.select(CHART_QUERY)
         val target: String = "장범준"
 
-        mNotificationBuilder.setContentText("멜론 Top100 차트에 $target _위로 포함되어 있습니다.")
+        mNotificationBuilder?.setContentText("멜론 Top100 차트에 $target _위로 포함되어 있습니다.")
 //            .setContentIntent()
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mNotificationManager.createNotificationChannel(NotificationChannel("default", "기본 채널",
+            mNotificationManager?.createNotificationChannel(NotificationChannel("default", "기본 채널",
                 NotificationManager.IMPORTANCE_DEFAULT))
         }
 
@@ -75,7 +75,7 @@ class TopHundredPullingThread(private val mContext: Context): Thread() {
             if(music.contains(target)) {
                 Log.d(TAG, "contains!")
 
-                mNotificationManager.notify(mNotificationId++, mNotificationBuilder.build())
+                mNotificationManager?.notify(mNotificationId++, mNotificationBuilder?.build())
             }
         }
     }
