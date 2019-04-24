@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.os.PowerManager
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.example.hclee.soundwatcher.R
@@ -27,12 +28,31 @@ class TopHundredPullingThread(private val mContext: Context): Thread() {
 
     private var mNotificationManager: NotificationManager? = null
     private var mNotificationBuilder: NotificationCompat.Builder? = null
+    private var mPowerManager: PowerManager? = null
+    private var mWakeLock: PowerManager.WakeLock? = null
 
     companion object {
         // Notification id should not depends on each thread object.
         // Because even service make new thread to pull chart data, then notify notification,
         // every notification should has different notification id.
         private var mNotificationId: Int = 0
+    }
+
+    private fun acquireWakeLock() {
+        mPowerManager = mPowerManager ?: (mContext.getSystemService(Context.POWER_SERVICE) as PowerManager)
+        mPowerManager?.let {
+            mWakeLock = mWakeLock ?: it.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG)
+        }
+
+        mWakeLock?.acquire(3000)
+    }
+
+    private fun releaseWakeLock() {
+        mWakeLock?.let {
+            if(it.isHeld) {
+                mWakeLock?.release()
+            }
+        }
     }
 
     override fun run() {
@@ -47,7 +67,9 @@ class TopHundredPullingThread(private val mContext: Context): Thread() {
             .setAutoCancel(true)
 //            .setSound()
 
+        acquireWakeLock()
         showTopHundred()
+        releaseWakeLock()
     }
 
     private fun showTopHundred() {
