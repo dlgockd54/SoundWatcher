@@ -25,6 +25,15 @@
                 android:enabled="true"
                 android:exported="true">
         </service>
+
+        <receiver
+                android:name=".AlarmReceiver"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.hclee.ALARM_START"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

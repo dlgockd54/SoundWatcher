@@ -1,21 +1,27 @@
 package com.example.hclee.soundwatcher.SoundWatchService
 
+import android.app.Notification
 import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import android.util.Log
 
 class SoundWatchService : Service() {
     private val TAG: String = SoundWatchService::class.java.simpleName
 
-    private lateinit var mTopHundredPullingThread: TopHundredPullingThread
+    private var mTopHundredPullingThread: TopHundredPullingThread? = null
 
     override fun onCreate() {
         super.onCreate()
 
         Log.d(TAG, "onCreate()")
 
-        mTopHundredPullingThread = TopHundredPullingThread(this)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForeground(1, Notification())
+        }
+
+        mTopHundredPullingThread = TopHundredPullingThread(this, OnPullFinishListenerImpl(this@SoundWatchService))
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -23,7 +29,11 @@ class SoundWatchService : Service() {
 
         Log.d(TAG, "onStartCommand()")
 
-        mTopHundredPullingThread.start()
+        mTopHundredPullingThread?.let {
+            if(it.state == Thread.State.NEW) {
+                it.start()
+            }
+        }
 
         return START_STICKY
     }
@@ -36,5 +46,7 @@ class SoundWatchService : Service() {
         super.onDestroy()
 
         Log.d(TAG, "onDestroy()")
+
+        mTopHundredPullingThread = null
     }
 }

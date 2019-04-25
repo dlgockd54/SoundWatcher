@@ -21,7 +21,8 @@ import org.jsoup.select.Elements
  * Pull top hundred chart from Melon.
  * Use main looper for handle message.
  */
-class TopHundredPullingThread(private val mContext: Context): Thread() {
+class TopHundredPullingThread(private val mContext: Context, private val listener: OnPullFinishListener)
+    : Thread() {
     private val TAG: String = TopHundredPullingThread::class.java.simpleName
     private val CHART_URL: String = "https://www.melon.com/chart/index.htm"
     private val CHART_QUERY: String = "div.ellipsis>span>a"
@@ -100,5 +101,7 @@ class TopHundredPullingThread(private val mContext: Context): Thread() {
                 mNotificationManager?.notify(mNotificationId++, mNotificationBuilder?.build())
             }
         }
+
+        listener.onPullFinish()
     }
 }
