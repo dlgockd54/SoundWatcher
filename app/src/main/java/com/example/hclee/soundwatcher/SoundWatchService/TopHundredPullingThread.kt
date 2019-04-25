@@ -12,6 +12,7 @@ import android.os.PowerManager
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.example.hclee.soundwatcher.R
+import com.example.hclee.soundwatcher.TargetSingerSetManager
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -81,7 +82,6 @@ class TopHundredPullingThread(private val mContext: Context, private val listene
         val document: Document = Jsoup.connect(CHART_URL).get()
         val singerElements: Elements = document.select(CHART_SINGER_QUERY)
         val titleElements: Elements = document.select(CHART_TITLE_QUERY)
-        val targetSinger: String = "장범준"
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mNotificationManager?.createNotificationChannel(NotificationChannel("default", "기본 채널",
@@ -94,10 +94,7 @@ class TopHundredPullingThread(private val mContext: Context, private val listene
             val title: String = titleElement.text()
             val singer: String = singerElement.text()
 
-//            Log.d(TAG, "singer: $singer")
-//            Log.d(TAG, "title: $title")
-
-            if(singer.contains(targetSinger)) {
+            if(TargetSingerSetManager.containsSinger(singer)) {
                 Log.d(TAG, "contains!")
 
                 makeNotification(singer, title)
