@@ -3,7 +3,10 @@ package com.example.hclee.soundwatcher.SoundWatchService
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.support.v4.app.NotificationCompat
@@ -11,6 +14,7 @@ import android.util.Log
 import com.example.hclee.soundwatcher.R
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
 /**
@@ -24,7 +28,8 @@ class TopHundredPullingThread(private val mContext: Context, private val listene
     : Thread() {
     private val TAG: String = TopHundredPullingThread::class.java.simpleName
     private val CHART_URL: String = "https://www.melon.com/chart/index.htm"
-    private val CHART_QUERY: String = "div.ellipsis>span>a"
+    private val CHART_TITLE_QUERY: String = "div.rank01>span>a"
+    private val CHART_SINGER_QUERY: String = "div.rank02>span>a"
 
     private var mNotificationManager: NotificationManager? = null
     private var mNotificationBuilder: NotificationCompat.Builder? = null
@@ -71,38 +76,44 @@ class TopHundredPullingThread(private val mContext: Context, private val listene
     }
 
     private fun pullTopHundred() {
-        var count: Int = 1
-
-        Log.d(TAG, "showTopHundred()")
+        Log.d(TAG, "pullTopHundred()")
 
         val document: Document = Jsoup.connect(CHART_URL).get()
-        val elements: Elements = document.select(CHART_QUERY)
-        val target: String = "장범준"
-
-        mNotificationBuilder?.setContentText("멜론 Top100 차트에 $target _위로 포함되어 있습니다.")
-//            .setContentIntent()
+        val singerElements: Elements = document.select(CHART_SINGER_QUERY)
+        val titleElements: Elements = document.select(CHART_TITLE_QUERY)
+        val targetSinger: String = "장범준"
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mNotificationManager?.createNotificationChannel(NotificationChannel("default", "기본 채널",
                 NotificationManager.IMPORTANCE_DEFAULT))
         }
 
-        for(element in elements) {
-            val music: String = element.text()
+        for(i in 0 until titleElements.size) {
+            val titleElement: Element = titleElements[i]
+            val singerElement: Element = singerElements[i]
+            val title: String = titleElement.text()
+            val singer: String = singerElement.text()
 
-            Log.d(TAG, "${count++}번째 $music")
+//            Log.d(TAG, "singer: $singer")
+//            Log.d(TAG, "title: $title")
 
-            if(music.contains(target)) {
+            if(singer.contains(targetSinger)) {
                 Log.d(TAG, "contains!")
 
-                makeNotification()
+                makeNotification(singer, title)
             }
         }
 
         listener.onPullFinish()
     }
 
-    private fun makeNotification() {
+    private fun makeNotification(singer: String, title: String) {
+        val targetUrl: String = "https://www.youtube.com/results?search_query=$singer+$title"
+        val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse(targetUrl))
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(mContext, 222, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        mNotificationBuilder?.setContentText("멜론 Top100 차트에 $singer - $title 포함되어 있습니다.")
+            ?.setContentIntent(pendingIntent)
         mNotificationManager?.notify(mNotificationId++, mNotificationBuilder?.build())
     }
 }
