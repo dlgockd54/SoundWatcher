@@ -18,8 +18,7 @@ import org.jsoup.select.Elements
  */
 
 /**
- * Pull top hundred chart from Melon.
- * Use main looper for handle message.
+ * Pull top hundred chart from Melon Top100.
  */
 class TopHundredPullingThread(private val mContext: Context, private val listener: OnPullFinishListener)
     : Thread() {
@@ -68,12 +67,10 @@ class TopHundredPullingThread(private val mContext: Context, private val listene
             .setAutoCancel(true)
 //            .setSound()
 
-        acquireWakeLock()
-        showTopHundred()
-        releaseWakeLock()
+        pullTopHundred()
     }
 
-    private fun showTopHundred() {
+    private fun pullTopHundred() {
         var count: Int = 1
 
         Log.d(TAG, "showTopHundred()")
@@ -98,10 +95,14 @@ class TopHundredPullingThread(private val mContext: Context, private val listene
             if(music.contains(target)) {
                 Log.d(TAG, "contains!")
 
-                mNotificationManager?.notify(mNotificationId++, mNotificationBuilder?.build())
+                makeNotification()
             }
         }
 
         listener.onPullFinish()
+    }
+
+    private fun makeNotification() {
+        mNotificationManager?.notify(mNotificationId++, mNotificationBuilder?.build())
     }
 }
