@@ -1,4 +1,4 @@
-package com.example.hclee.soundwatcher.WatchService.Top100WatchService
+package com.example.hclee.soundwatcher.watchservice.newalbumwatchservice
 
 import android.app.Notification
 import android.app.Service
@@ -6,12 +6,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import com.example.hclee.soundwatcher.WatchService.OnPullFinishListenerImpl
+import com.example.hclee.soundwatcher.watchservice.OnPullFinishListenerImpl
 
-class SoundWatchService : Service() {
-    private val TAG: String = SoundWatchService::class.java.simpleName
+class NewAlbumWatchService : Service() {
+    private val TAG: String = NewAlbumWatchService::class.java.simpleName
 
-    private var mTopHundredPullingThread: TopHundredPullingThread? = null
+    private var mNewAlbumPullingThread: NewAlbumPullingThread? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -19,12 +19,10 @@ class SoundWatchService : Service() {
         Log.d(TAG, "onCreate()")
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForeground(1, Notification())
+            startForeground(2, Notification())
         }
 
-        mTopHundredPullingThread = TopHundredPullingThread(this,
-            OnPullFinishListenerImpl(this@SoundWatchService)
-        )
+        mNewAlbumPullingThread = NewAlbumPullingThread(this, OnPullFinishListenerImpl(this@NewAlbumWatchService))
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -32,7 +30,7 @@ class SoundWatchService : Service() {
 
         Log.d(TAG, "onStartCommand()")
 
-        mTopHundredPullingThread?.let {
+        mNewAlbumPullingThread?.let {
             if(it.state == Thread.State.NEW) {
                 it.start()
             }
@@ -50,6 +48,6 @@ class SoundWatchService : Service() {
 
         Log.d(TAG, "onDestroy()")
 
-        mTopHundredPullingThread = null
+        mNewAlbumPullingThread = null
     }
 }

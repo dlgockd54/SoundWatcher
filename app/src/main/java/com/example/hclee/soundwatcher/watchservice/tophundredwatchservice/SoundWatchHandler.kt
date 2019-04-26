@@ -1,4 +1,4 @@
-package com.example.hclee.soundwatcher.WatchService.Top100WatchService
+package com.example.hclee.soundwatcher.watchservice.tophundredwatchservice
 
 import android.os.Handler
 import android.os.Looper

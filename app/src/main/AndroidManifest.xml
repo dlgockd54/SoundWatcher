@@ -21,7 +21,7 @@
         </activity>
 
         <service
-                android:name=".SoundWatchService.SoundWatchService"
+                android:name=".watchservice.tophundredwatchservice.TopHundredWatchService"
                 android:enabled="true"
                 android:exported="true">
         </service>
@@ -34,6 +34,12 @@
                 <action android:name="com.example.hclee.ALARM_START"/>
             </intent-filter>
         </receiver>
+
+        <service
+                android:name=".watchservice.newalbumwatchservice.NewAlbumWatchService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
     </application>
 
 </manifest>

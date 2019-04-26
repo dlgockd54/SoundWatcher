@@ -12,6 +12,7 @@ object TargetSingerSetManager {
 
     init {
         addTargetSinger("트와이스")
+        addTargetSinger("마인드유")
     }
 
     fun addTargetSinger(singer: String) {

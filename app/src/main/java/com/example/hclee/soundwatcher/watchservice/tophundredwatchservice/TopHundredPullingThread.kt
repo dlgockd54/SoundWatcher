@@ -1,4 +1,4 @@
-package com.example.hclee.soundwatcher.WatchService.Top100WatchService
+package com.example.hclee.soundwatcher.watchservice.tophundredwatchservice
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -13,7 +13,7 @@ import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.example.hclee.soundwatcher.R
 import com.example.hclee.soundwatcher.TargetSingerSetManager
-import com.example.hclee.soundwatcher.WatchService.OnPullFinishListener
+import com.example.hclee.soundwatcher.watchservice.OnPullFinishListener
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -26,7 +26,7 @@ import org.jsoup.select.Elements
 /**
  * Pull top hundred chart from Melon Top100.
  */
-class TopHundredPullingThread(private val mContext: Context, private val listener: OnPullFinishListener)
+class TopHundredPullingThread(private val mContext: Context, private val mListener: OnPullFinishListener)
     : Thread() {
     private val TAG: String = TopHundredPullingThread::class.java.simpleName
     private val CHART_URL: String = "https://www.melon.com/chart/index.htm"
@@ -104,7 +104,7 @@ class TopHundredPullingThread(private val mContext: Context, private val listene
             }
         }
 
-        listener.onPullFinish()
+        mListener.onPullFinish()
     }
 
     private fun makeNotification(singer: String, title: String) {
