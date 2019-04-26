@@ -1,4 +1,4 @@
-package com.example.hclee.soundwatcher.SoundWatchService
+package com.example.hclee.soundwatcher.WatchService.Top100WatchService
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.example.hclee.soundwatcher.R
 import com.example.hclee.soundwatcher.TargetSingerSetManager
+import com.example.hclee.soundwatcher.WatchService.OnPullFinishListener
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -93,6 +94,8 @@ class TopHundredPullingThread(private val mContext: Context, private val listene
             val singerElement: Element = singerElements[i]
             val title: String = titleElement.text()
             val singer: String = singerElement.text()
+
+            Log.d(TAG, "singer: $singer, title: $title")
 
             if(TargetSingerSetManager.containsSinger(singer)) {
                 Log.d(TAG, "contains!")

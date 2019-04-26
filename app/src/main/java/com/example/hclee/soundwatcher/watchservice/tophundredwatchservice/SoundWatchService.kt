@@ -1,4 +1,4 @@
-package com.example.hclee.soundwatcher.SoundWatchService
+package com.example.hclee.soundwatcher.WatchService.Top100WatchService
 
 import android.app.Notification
 import android.app.Service
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import com.example.hclee.soundwatcher.WatchService.OnPullFinishListenerImpl
 
 class SoundWatchService : Service() {
     private val TAG: String = SoundWatchService::class.java.simpleName
@@ -21,7 +22,9 @@ class SoundWatchService : Service() {
             startForeground(1, Notification())
         }
 
-        mTopHundredPullingThread = TopHundredPullingThread(this, OnPullFinishListenerImpl(this@SoundWatchService))
+        mTopHundredPullingThread = TopHundredPullingThread(this,
+            OnPullFinishListenerImpl(this@SoundWatchService)
+        )
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
