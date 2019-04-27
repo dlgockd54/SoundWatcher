@@ -11,8 +11,9 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-        <activity android:name=".MainActivity">
+            android:theme="@style/Theme.AppCompat">
+        <activity android:name=".MainActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -42,6 +43,9 @@
                 android:exported="true"
                 android:process=":new_album">
         </service>
+
+        <activity android:name=".TargetSingerConfigurationActivity">
+        </activity>
     </application>
 
 </manifest>

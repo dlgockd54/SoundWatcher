@@ -42,7 +42,7 @@ class TopHundredPullingThread(private val mContext: Context, private val mListen
         // Notification id should not depends on each thread object.
         // Because even service make new thread to pull chart data, then notify notification,
         // every notification should has different notification id.
-        private var mNotificationId: Int = 0
+        private var mNotificationId: Int = 1
     }
 
     private fun acquireWakeLock() {
