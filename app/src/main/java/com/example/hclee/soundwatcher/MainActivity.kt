@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
 import android.util.Log
+import com.example.hclee.soundwatcher.targetsinger.TargetSingerActivity
 
 class MainActivity : AppCompatActivity() {
     private val TAG: String = MainActivity::class.java.simpleName

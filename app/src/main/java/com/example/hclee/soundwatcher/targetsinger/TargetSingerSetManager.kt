@@ -1,4 +1,4 @@
-package com.example.hclee.soundwatcher
+package com.example.hclee.soundwatcher.targetsinger
 
 import android.util.Log
 

@@ -12,7 +12,7 @@ import android.os.PowerManager
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.example.hclee.soundwatcher.R
-import com.example.hclee.soundwatcher.TargetSingerSetManager
+import com.example.hclee.soundwatcher.targetsinger.TargetSingerSetManager
 import com.example.hclee.soundwatcher.watchservice.OnPullFinishListener
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
