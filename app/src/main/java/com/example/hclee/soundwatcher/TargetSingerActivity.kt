@@ -4,12 +4,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
-class TargetSingerConfigurationActivity : AppCompatActivity() {
-    private val TAG: String = TargetSingerConfigurationActivity::class.java.simpleName
+class TargetSingerActivity : AppCompatActivity() {
+    private val TAG: String = TargetSingerActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_target_singer_configuration)
+        setContentView(R.layout.activity_target_singer)
 
         Log.d(TAG, "onCreate()")
     }

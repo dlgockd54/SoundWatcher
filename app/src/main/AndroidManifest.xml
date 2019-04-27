@@ -44,7 +44,7 @@
                 android:process=":new_album">
         </service>
 
-        <activity android:name=".TargetSingerConfigurationActivity">
+        <activity android:name=".TargetSingerActivity">
         </activity>
     </application>
 

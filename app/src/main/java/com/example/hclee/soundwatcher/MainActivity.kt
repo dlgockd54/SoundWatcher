@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeNotification() {
-        val targetSingerConfigurationIntent: Intent = Intent(this, TargetSingerConfigurationActivity::class.java)
+        val targetSingerConfigurationIntent: Intent = Intent(this, TargetSingerActivity::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
             this, 333,
             targetSingerConfigurationIntent, PendingIntent.FLAG_UPDATE_CURRENT
