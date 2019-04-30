@@ -56,7 +56,7 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.layout_target_singer_recycler_view, R.id.layout_target_singer -> {
+            R.id.layout_target_singer -> {
                 (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
                     .hideSoftInputFromWindow(mAddTargetSingerEditText.windowToken, 0)
             }
@@ -73,7 +73,7 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
     }
 
     override fun updateTargetSingerAdapter() {
-        mAdapter = TargetSingerAdapter(this, (mPresenter as TargetSingerPresenter).mTargetSingerList)
+        mAdapter = TargetSingerAdapter((mPresenter as TargetSingerPresenter).mTargetSingerList)
         mRecyclerView.adapter = mAdapter
     }
 
