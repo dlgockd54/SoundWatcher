@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.hclee.soundwatcher.R
 import kotlinx.android.synthetic.main.activity_target_singer.*
 
@@ -67,6 +68,12 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
 
                 if(!singer.isEmpty()) {
                     mPresenter.addTargetSinger(singer)
+
+                    Toast.makeText(this, "추가된 가수는 일정 시간이 지난 후부터 탐색 대상에 포함됩니다.",
+                        Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Log.d(TAG, "target singer empty!")
                 }
             }
         }
