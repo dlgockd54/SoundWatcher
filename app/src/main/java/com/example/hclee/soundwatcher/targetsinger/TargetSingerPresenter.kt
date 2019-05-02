@@ -15,6 +15,19 @@ class TargetSingerPresenter(private val mView: TargetSingerContract.View): Targe
     override fun addTargetSinger(singer: String) {
         Log.d(TAG, "addTargetSinger()")
 
+        addTargetSingerToManager(singer)
+        addTargetSingerToList(singer)
+    }
+
+    private fun addTargetSingerToManager(singer: String) {
+        Log.d(TAG, "addTargetSingerToManager()")
+
+        TargetSingerSetManager.addTargetSinger(singer)
+    }
+
+    private fun addTargetSingerToList(singer: String) {
+        Log.d(TAG, "addTargetSingerToList()")
+
         if(!singer.isEmpty()) {
             mTargetSingerList.add(TargetSingerData(singer))
         }
@@ -23,6 +36,21 @@ class TargetSingerPresenter(private val mView: TargetSingerContract.View): Targe
     }
 
     override fun removeTargetSinger(singer: String) {
+        Log.d(TAG, "removeTargetSinger()")
+
+        removeTargetSingerFromManager(singer)
+        removeTargetSingerFromList(singer)
+    }
+
+    private fun removeTargetSingerFromManager(singer: String) {
+        Log.d(TAG, "removeTargetSingerFromManager()")
+
+        TargetSingerSetManager.removeTargetSinger(singer)
+    }
+
+    private fun removeTargetSingerFromList(singer: String) {
+        Log.d(TAG, "removeTargetSingerFromList()")
+
         for(element in mTargetSingerList) {
             if(element.mTargetSinger.contains(singer)) {
                 mTargetSingerList.remove(element)
