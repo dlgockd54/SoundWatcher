@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.RequestManager
 import com.example.hclee.soundwatcher.R
 import java.util.*
 
@@ -12,7 +14,8 @@ import java.util.*
  * Created by hclee on 2019-04-27.
  */
 
-class TargetSingerAdapter(private val mTargetSingerList: LinkedList<TargetSingerData>)
+class TargetSingerAdapter(private val mGlideRequestManager: RequestManager,
+                          private val mTargetSingerList: LinkedList<TargetSingerData>)
     : RecyclerView.Adapter<TargetSingerAdapter.TargetSingerViewHolder>() {
     private val TAG: String = TargetSingerAdapter::class.java.simpleName
 
@@ -34,11 +37,15 @@ class TargetSingerAdapter(private val mTargetSingerList: LinkedList<TargetSinger
 
     override fun onBindViewHolder(holder: TargetSingerViewHolder?, position: Int) {
         holder?.let {
+            mGlideRequestManager.load(R.raw.watch)
+                .circleCrop()
+                .into(it.watchImageView)
             it.targetSingerTextView.text = mTargetSingerList[position].mTargetSinger
         }
     }
 
     class TargetSingerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val watchImageView: ImageView = itemView.findViewById(R.id.iv_target_singer)
         val targetSingerTextView: TextView = itemView.findViewById(R.id.tv_target_singer)
     }
 }

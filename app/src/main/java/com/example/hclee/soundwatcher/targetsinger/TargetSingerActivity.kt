@@ -12,6 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.example.hclee.soundwatcher.R
 import kotlinx.android.synthetic.main.activity_target_singer.*
 
@@ -25,6 +27,7 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
     private lateinit var mAdapter: TargetSingerAdapter
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
     private lateinit var mActivityLayout: LinearLayout
+    private lateinit var mGlideRequestManager: RequestManager
     lateinit var mAddTargetSingerEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +43,7 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
         mActivityLayout = layout_target_singer
         mAddTargetSingerButton = btn_add_singer
         mAddTargetSingerEditText = et_add_singer
+        mGlideRequestManager = Glide.with(this)
         mPresenter = TargetSingerPresenter(this)
         mLayoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.VERTICAL
@@ -83,7 +87,7 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
     }
 
     override fun updateTargetSingerAdapter() {
-        mAdapter = TargetSingerAdapter((mPresenter as TargetSingerPresenter).mTargetSingerList)
+        mAdapter = TargetSingerAdapter(mGlideRequestManager, (mPresenter as TargetSingerPresenter).mTargetSingerList)
         mRecyclerView.adapter = mAdapter
     }
 
