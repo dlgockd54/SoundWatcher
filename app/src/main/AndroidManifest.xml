@@ -24,8 +24,8 @@
         <service
                 android:name=".watchservice.tophundredwatchservice.TopHundredWatchService"
                 android:enabled="true"
-                android:exported="true"
-                android:process=":top_hundred">
+                android:exported="true">
+                <!--android:process=":top_hundred">-->
         </service>
 
         <receiver
@@ -40,8 +40,8 @@
         <service
                 android:name=".watchservice.newalbumwatchservice.NewAlbumWatchService"
                 android:enabled="true"
-                android:exported="true"
-                android:process=":new_album">
+                android:exported="true">
+                <!--android:process=":new_album">-->
         </service>
 
         <activity android:name=".targetsinger.TargetSingerActivity">
