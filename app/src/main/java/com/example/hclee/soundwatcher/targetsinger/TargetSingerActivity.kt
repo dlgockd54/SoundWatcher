@@ -3,6 +3,7 @@ package com.example.hclee.soundwatcher.targetsinger
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -28,6 +29,7 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
     private lateinit var mActivityLayout: LinearLayout
     private lateinit var mGlideRequestManager: RequestManager
+    private lateinit var mDividerItemDecoration: DividerItemDecoration
     lateinit var mAddTargetSingerEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,12 +47,15 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
         mAddTargetSingerEditText = et_add_singer
         mGlideRequestManager = Glide.with(this)
         mPresenter = TargetSingerPresenter(this)
+        mDividerItemDecoration = DividerItemDecoration(applicationContext,
+            LinearLayoutManager(this).orientation)
         mLayoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
         mRecyclerView = rv_target_singer.apply {
             setHasFixedSize(true)
             layoutManager = mLayoutManager
+            addItemDecoration(mDividerItemDecoration)
         }
 
         updateTargetSingerAdapter()
