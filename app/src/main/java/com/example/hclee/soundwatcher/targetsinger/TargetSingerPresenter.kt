@@ -12,17 +12,24 @@ class TargetSingerPresenter(private val mView: TargetSingerContract.View): Targe
 
     val mTargetSingerList: LinkedList<TargetSingerData> = LinkedList<TargetSingerData>()
 
-    override fun addTargetSinger(singer: String) {
+    override fun addTargetSinger(singer: String): Boolean {
         Log.d(TAG, "addTargetSinger()")
 
-        addTargetSingerToManager(singer)
-        addTargetSingerToList(singer)
+        return addTargetSingerToManager(singer)
     }
 
-    private fun addTargetSingerToManager(singer: String) {
+    private fun addTargetSingerToManager(singer: String): Boolean {
+        var isAdded: Boolean = false
+
         Log.d(TAG, "addTargetSingerToManager()")
 
-        TargetSingerSetManager.addTargetSinger(singer)
+        isAdded = TargetSingerSetManager.addTargetSinger(singer)
+
+        if(isAdded) {
+            addTargetSingerToList(singer)
+        }
+
+        return isAdded
     }
 
     private fun addTargetSingerToList(singer: String) {
@@ -35,17 +42,24 @@ class TargetSingerPresenter(private val mView: TargetSingerContract.View): Targe
         mView.updateTargetSingerAdapter()
     }
 
-    override fun removeTargetSinger(singer: String) {
+    override fun removeTargetSinger(singer: String): Boolean {
         Log.d(TAG, "removeTargetSinger()")
 
-        removeTargetSingerFromManager(singer)
-        removeTargetSingerFromList(singer)
+        return removeTargetSingerFromManager(singer)
     }
 
-    private fun removeTargetSingerFromManager(singer: String) {
+    private fun removeTargetSingerFromManager(singer: String): Boolean {
+        var isRemoved: Boolean = false
+
         Log.d(TAG, "removeTargetSingerFromManager()")
 
-        TargetSingerSetManager.removeTargetSinger(singer)
+        isRemoved = TargetSingerSetManager.removeTargetSinger(singer)
+
+        if(isRemoved) {
+            removeTargetSingerFromList(singer)
+        }
+
+        return isRemoved
     }
 
     private fun removeTargetSingerFromList(singer: String) {
@@ -56,5 +70,7 @@ class TargetSingerPresenter(private val mView: TargetSingerContract.View): Targe
                 mTargetSingerList.remove(element)
             }
         }
+
+        mView.updateTargetSingerAdapter()
     }
 }

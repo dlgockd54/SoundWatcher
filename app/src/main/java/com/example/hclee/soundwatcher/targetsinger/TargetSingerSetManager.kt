@@ -11,19 +11,30 @@ object TargetSingerSetManager {
     private val TAG: String = TargetSingerSetManager::class.java.simpleName
     private val mTargetSingerSet: HashSet<String> = HashSet<String>()
 
-    fun addTargetSinger(singer: String) {
+    fun addTargetSinger(singer: String): Boolean {
+        var isAdded: Boolean = false
         Log.d(TAG, "addTargetSinger()")
 
         if(mTargetSingerSet.add(singer)) {
             Log.d(TAG, "adding target singer succeed")
+
+            isAdded = true
         }
         else {
             Log.d(TAG, "adding target singer failed")
         }
+
+        return isAdded
     }
 
-    fun removeTargetSinger(singer: String) {
-        mTargetSingerSet.remove(singer)
+    fun removeTargetSinger(singer: String): Boolean {
+        var isRemoved: Boolean = false
+
+        if(mTargetSingerSet.remove(singer)) {
+            isRemoved = true
+        }
+
+        return isRemoved
     }
 
     fun containsSinger(singer: String): Boolean {

@@ -12,7 +12,7 @@ interface TargetSingerContract {
     }
 
     interface Presenter {
-        fun addTargetSinger(singer: String)
-        fun removeTargetSinger(singer: String)
+        fun addTargetSinger(singer: String): Boolean
+        fun removeTargetSinger(singer: String): Boolean
     }
 }
