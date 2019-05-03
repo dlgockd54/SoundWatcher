@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/colorBackground"
         tools:context=".targetsinger.TargetSingerActivity">
 
     <LinearLayout
@@ -19,6 +20,7 @@
                 android:id="@+id/et_add_singer"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
+                android:textColor="@color/colorText"
                 android:hint="감시할 가수명을 입력하세요."/>
 
         <Button
