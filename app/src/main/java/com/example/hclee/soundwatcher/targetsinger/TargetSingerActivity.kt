@@ -67,8 +67,7 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.layout_target_singer -> {
-                (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-                    .hideSoftInputFromWindow(mAddTargetSingerEditText.windowToken, 0)
+                hideKeyboard()
             }
             R.id.btn_add_singer -> {
                 val singer: String = mAddTargetSingerEditText.text.toString()
@@ -77,6 +76,7 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
 
                 if(!singer.isEmpty()) {
                     if(mPresenter.addTargetSinger(singer)) {
+                        hideKeyboard()
                         mAddTargetSingerEditText.text.clear()
 
                         Toast.makeText(this, "추가된 가수는 일정 시간이 지난 후부터 탐색 대상에 포함됩니다.",
@@ -91,6 +91,11 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
                 }
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+            .hideSoftInputFromWindow(mAddTargetSingerEditText.windowToken, 0)
     }
 
     override fun updateTargetSingerAdapter() {
