@@ -77,6 +77,8 @@ class TargetSingerActivity : AppCompatActivity(), TargetSingerContract.View, Vie
 
                 if(!singer.isEmpty()) {
                     if(mPresenter.addTargetSinger(singer)) {
+                        mAddTargetSingerEditText.text.clear()
+
                         Toast.makeText(this, "추가된 가수는 일정 시간이 지난 후부터 탐색 대상에 포함됩니다.",
                             Toast.LENGTH_SHORT).show()
                     }
